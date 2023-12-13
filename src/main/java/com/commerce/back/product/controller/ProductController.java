@@ -20,9 +20,6 @@ public class ProductController {
     @Operation(summary = "상품을 검색해서 조회한다.")
     @GetMapping("/api/product")
     public ProductSearchResponse searchProductList(ProductSearchRequest productSearchRequest){
-        ProductSearchResponse p = new ProductSearchResponse(productService.searchProductList(productSearchRequest));
-
-
         return new ProductSearchResponse(productService.searchProductList(productSearchRequest));
     }
 }
