@@ -1,4 +1,4 @@
-package com.commerce.back.product.application;
+package com.sample.ecommerce.product.application;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

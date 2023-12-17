@@ -1,7 +1,7 @@
-package com.commerce.back.bookmark.application;
+package com.sample.ecommerce.bookmark.application;
 
-import com.commerce.back.bookmark.domain.Bookmark;
-import com.commerce.back.bookmark.domain.BookmarkRepository;
+import com.sample.ecommerce.bookmark.domain.Bookmark;
+import com.sample.ecommerce.bookmark.domain.BookmarkRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -1,11 +1,10 @@
-package com.commerce.back.product.application;
+package com.sample.ecommerce.product.application;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Getter
@@ -16,9 +15,6 @@ public class ProductDto {
 
     @Schema(description = "물품 ID")
     Long productId;
-
-    @Schema(description = "가게 ID")
-    Long storeId;
 
     @Schema(description = "물품 이름")
     String productName;

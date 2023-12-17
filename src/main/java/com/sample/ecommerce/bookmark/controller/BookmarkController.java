@@ -1,11 +1,12 @@
-package com.commerce.back.bookmark.controller;
+package com.sample.ecommerce.bookmark.controller;
 
-import com.commerce.back.bookmark.application.BookmarkRegisterRequest;
-import com.commerce.back.bookmark.application.BookmarkRegisterResponse;
-import com.commerce.back.bookmark.application.BookmarkService;
+import com.sample.ecommerce.bookmark.application.BookmarkRegisterRequest;
+import com.sample.ecommerce.bookmark.application.BookmarkRegisterResponse;
+import com.sample.ecommerce.bookmark.application.BookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +17,7 @@ public class BookmarkController {
 
     @Operation(summary = "북마크를 등록한다.")
     @PostMapping("/api/bookmark")
-    public BookmarkRegisterResponse registerBookmark (BookmarkRegisterRequest bookmarkRegisterRequest){
+    public BookmarkRegisterResponse registerBookmark (@RequestBody BookmarkRegisterRequest bookmarkRegisterRequest){
         return bookmarkService.registerBookmark(bookmarkRegisterRequest).toRegisterResponse();
     }
 }

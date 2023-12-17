@@ -1,7 +1,7 @@
-package com.commerce.back.bookmark.domain;
+package com.sample.ecommerce.bookmark.domain;
 
-import com.commerce.back.bookmark.application.BookmarkDto;
-import com.commerce.back.bookmark.application.BookmarkRegisterRequest;
+import com.sample.ecommerce.bookmark.application.BookmarkDto;
+import com.sample.ecommerce.bookmark.application.BookmarkRegisterRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

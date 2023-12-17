@@ -1,4 +1,4 @@
-package com.commerce.back.bookmark.domain;
+package com.sample.ecommerce.bookmark.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

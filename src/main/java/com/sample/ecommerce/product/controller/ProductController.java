@@ -1,15 +1,12 @@
-package com.commerce.back.product.controller;
+package com.sample.ecommerce.product.controller;
 
-import com.commerce.back.product.application.ProductDto;
-import com.commerce.back.product.application.ProductSearchRequest;
-import com.commerce.back.product.application.ProductSearchResponse;
-import com.commerce.back.product.application.ProductService;
+import com.sample.ecommerce.product.application.ProductSearchRequest;
+import com.sample.ecommerce.product.application.ProductSearchResponse;
+import com.sample.ecommerce.product.application.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

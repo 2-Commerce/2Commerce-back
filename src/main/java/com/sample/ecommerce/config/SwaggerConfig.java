@@ -1,4 +1,4 @@
-package com.commerce.back.config;
+package com.sample.ecommerce.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

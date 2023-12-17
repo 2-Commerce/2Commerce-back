@@ -1,4 +1,4 @@
-package com.commerce.back.bookmark.application;
+package com.sample.ecommerce.bookmark.application;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
