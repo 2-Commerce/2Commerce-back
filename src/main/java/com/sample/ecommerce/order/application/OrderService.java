@@ -4,6 +4,7 @@ import com.sample.ecommerce.order.domain.Order;
 import com.sample.ecommerce.order.domain.OrderProduct;
 import com.sample.ecommerce.order.domain.OrderProductRepository;
 import com.sample.ecommerce.order.domain.OrderRepository;
+import com.sample.ecommerce.pay.application.PayRegisterRequest;
 import com.sample.ecommerce.product.application.ProductService;
 import com.sample.ecommerce.product.application.ProductWithStoreDto;
 import lombok.AccessLevel;
@@ -12,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +33,11 @@ public class OrderService {
         List<OrderProduct> orderProductList = orderProductDtoList.stream().map(orderProductDto -> new OrderProduct(orderDto,  orderProductDto)).toList();
         orderProductRepository.saveAll(orderProductList);
         return orderDto;
+    }
+
+    public Order payOrder(PayRegisterRequest payRegisterRequest){
+        final Order order = orderRepository.findById(payRegisterRequest.getOrderId()).orElseThrow();
+        order.pay(payRegisterRequest);
+        return orderRepository.save(order);
     }
 }

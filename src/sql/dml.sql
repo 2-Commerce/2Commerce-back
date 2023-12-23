@@ -65,7 +65,7 @@ INSERT INTO `bookmark` (user_id, product_id) VALUES
 
 -- order 테이블에 데이터 삽입
 INSERT INTO `order` (user_id, order_amount, order_at, order_address, order_status) VALUES
-('user1', 10000, '2023-12-16 12:00:00', 'Address1', 'Shipped'),
+('user1', 10000, '2023-12-16 12:00:00', 'Address1', 'Pending'),
 ('user2', 15000, '2023-12-16 12:30:00', 'Address2', 'Delivered'),
 ('user3', 20000, '2023-12-16 13:00:00', 'Address3', 'Processing'),
 ('user4', 25000, '2023-12-16 13:30:00', 'Address4', 'Shipped'),

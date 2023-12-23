@@ -3,6 +3,7 @@ package com.sample.ecommerce.order.domain;
 import com.sample.ecommerce.order.application.OrderDto;
 import com.sample.ecommerce.order.application.OrderRegisterRequest;
 import com.sample.ecommerce.order.application.OrderStatus;
+import com.sample.ecommerce.pay.application.PayRegisterRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,6 +38,12 @@ public class Order {
         this.orderAt = LocalDateTime.now();
         this.orderAddress = request.getOrderAddress();
         this.orderStatus = OrderStatus.PENDING;
+    }
+
+    public void pay(PayRegisterRequest payRegisterRequest) {
+        if (!payRegisterRequest.getUserId().equals(this.userId)) throw new IllegalArgumentException("User IDs do not match");
+        if (this.orderStatus != OrderStatus.PENDING) throw new IllegalArgumentException("Order has already been paid");
+        this.orderStatus = OrderStatus.PROCESSING;
     }
 
     public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
