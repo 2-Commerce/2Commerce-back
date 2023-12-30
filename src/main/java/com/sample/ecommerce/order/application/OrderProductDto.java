@@ -42,4 +42,7 @@ public class OrderProductDto {
     @Schema(description = "물품 가격")
     Long productPrice;
 
+    public OrderProductGetResponse toGetResponse() {
+        return new OrderProductGetResponse(this.orderProductId, this.orderQuantity, this.productId, this.productName, this.productPrice);
+    }
 }
