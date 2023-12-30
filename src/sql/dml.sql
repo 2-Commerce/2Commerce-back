@@ -65,16 +65,11 @@ INSERT INTO `bookmark` (user_id, product_id) VALUES
 
 -- order 테이블에 데이터 삽입
 INSERT INTO `order` (user_id, order_amount, order_at, order_address, order_status) VALUES
-('user1', 10000, '2023-12-16 12:00:00', 'Address1', 'Pending'),
-('user2', 15000, '2023-12-16 12:30:00', 'Address2', 'Delivered'),
-('user3', 20000, '2023-12-16 13:00:00', 'Address3', 'Processing'),
-('user4', 25000, '2023-12-16 13:30:00', 'Address4', 'Shipped'),
-('user5', 30000, '2023-12-16 14:00:00', 'Address5', 'Delivered'),
-('user1', 35000, '2023-12-16 14:30:00', 'Address6', 'Processing'),
-('user2', 40000, '2023-12-16 15:00:00', 'Address7', 'Shipped'),
-('user3', 45000, '2023-12-16 15:30:00', 'Address8', 'Delivered'),
-('user4', 50000, '2023-12-16 16:00:00', 'Address9', 'Processing'),
-('user5', 55000, '2023-12-16 16:30:00', 'Address10', 'Shipped');
+('user1', 17000, '2023-12-16 12:00:00', 'Address1', 'Pending'),
+('user2', 25000, '2023-12-16 12:30:00', 'Address2', 'Delivered'),
+('user3', 33000, '2023-12-16 13:00:00', 'Address3', 'Processing'),
+('user4', 32000, '2023-12-16 13:30:00', 'Address4', 'Shipped'),
+('user5', 42000, '2023-12-16 14:00:00', 'Address5', 'Delivered');
 
 -- order_product 테이블에 데이터 삽입
 INSERT INTO `order_product` (order_id, order_quantity, store_id, store_name, store_account_number, product_id, product_name, product_category, product_price) VALUES

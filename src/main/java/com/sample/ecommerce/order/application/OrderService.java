@@ -40,4 +40,10 @@ public class OrderService {
         order.pay(payRegisterRequest);
         return orderRepository.save(order);
     }
+
+    public OrderGetResponse getOrder(OrderGetRequest orderGetRequest) {
+        OrderDto orderDto = orderRepository.findById(orderGetRequest.getOrderId()).orElseThrow().toDto();
+        List<OrderProductGetResponse> productGetResponseList = orderProductRepository.findByOrderId(orderGetRequest.getOrderId()).stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
+        return new OrderGetResponse(orderDto, productGetResponseList);
+    }
 }

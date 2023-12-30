@@ -48,5 +48,5 @@ public class OrderProduct {
         this.productPrice = productDto.getProductPrice();
     }
 
-    OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice); }
+    public OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice); }
 }
