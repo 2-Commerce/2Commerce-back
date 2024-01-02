@@ -46,4 +46,11 @@ public class OrderService {
         List<OrderProductGetResponse> productGetResponseList = orderProductRepository.findByOrderId(orderGetRequest.getOrderId()).stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
         return new OrderGetResponse(orderDto, productGetResponseList);
     }
+
+    public OrderCancelResponse cancelOrder(Long orderId) {
+        final Order order = orderRepository.findById(orderId).orElseThrow();
+        order.cancel();
+        OrderDto orderDto = order.toDto();
+        return new OrderCancelResponse(orderDto);
+    }
 }

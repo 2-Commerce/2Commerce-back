@@ -46,5 +46,10 @@ public class Order {
         this.orderStatus = OrderStatus.PROCESSING;
     }
 
+    public void cancel() {
+        if (this.orderStatus != OrderStatus.PENDING) throw new IllegalArgumentException("The order cannot be canceled as it has already been processed.");
+        this.orderStatus = OrderStatus.CANCELED;
+    }
+
     public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
 }
