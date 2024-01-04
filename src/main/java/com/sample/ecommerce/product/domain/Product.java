@@ -1,6 +1,7 @@
 package com.sample.ecommerce.product.domain;
 
 import com.sample.ecommerce.product.application.ProductDto;
+import com.sample.ecommerce.product.application.ProductRegisterRequest;
 import com.sample.ecommerce.product.application.ProductWithStoreDto;
 import com.sample.ecommerce.store.domain.Store;
 import jakarta.persistence.*;
@@ -40,6 +41,17 @@ public class Product {
             this.productOrderQuantity = productOrderQuantity;
             this.productQuantity -= this.productOrderQuantity;
         }
+    }
+
+    public Product(ProductRegisterRequest productRegisterRequest, Store store) {
+        if (productRegisterRequest.getProductPrice() < 0) throw new IllegalArgumentException("Price cannot be negative.");
+        if (productRegisterRequest.getProductQuantity() < 0) throw new IllegalArgumentException("Quantity cannot be negative.");
+        this.productName = productRegisterRequest.getProductName();
+        this.productCategory = productRegisterRequest.getProductCategory();
+        this.productQuantity = productRegisterRequest.getProductQuantity();
+        this.productPrice = productRegisterRequest.getProductPrice();
+        this.productImageUrl = productRegisterRequest.getUrl();
+        this.store = store;
     }
 
     public ProductDto toDto() { return new ProductDto(productId, productName, productCategory, productQuantity, productPrice, productImageUrl); }
