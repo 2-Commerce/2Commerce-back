@@ -17,4 +17,8 @@ public class StoreService {
         final Store store = storeRepository.save(new Store(storeRegisterRequest));
         return store.toDto();
     }
+
+    public Store findStore(Long storeId) {
+        return storeRepository.findById(storeId).orElseThrow();
+    }
 }
