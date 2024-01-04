@@ -2,6 +2,7 @@ package com.sample.ecommerce.store.domain;
 
 import com.sample.ecommerce.product.domain.Product;
 import com.sample.ecommerce.store.application.StoreDto;
+import com.sample.ecommerce.store.application.StoreRegisterRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,5 +31,12 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> productList;
 
-    StoreDto toDto() {return new StoreDto(storeId, sellerId, storeLicense, storeAccountNumber, storeName); }
+    public Store(StoreRegisterRequest storeRegisterRequest) {
+        this.sellerId = storeRegisterRequest.getSellerId();
+        this.storeLicense = storeRegisterRequest.getStoreLicense();
+        this.storeAccountNumber = storeRegisterRequest.getStoreAccountNumber();
+        this.storeName = storeRegisterRequest.getStoreName();
+    }
+
+    public StoreDto toDto() {return new StoreDto(storeId, sellerId, storeLicense, storeAccountNumber, storeName); }
 }
