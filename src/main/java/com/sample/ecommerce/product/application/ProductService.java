@@ -39,4 +39,8 @@ public class ProductService {
         final Product product = productRepository.save(new Product(productRegisterRequest, storeService.findStore(productRegisterRequest.getStoreId())));
         return product.toDto();
     }
+
+    public List<ProductDto> getProductInStore(Long storeId) {
+        return productRepository.findProductsByStoreId(storeId).stream().map(Product::toDto).toList();
+    }
 }

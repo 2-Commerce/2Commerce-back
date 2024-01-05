@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-
     @Query("SELECT p FROM Product p " +
             "WHERE (:keyword is null or :keyword = '' or p.productName like concat('%', :keyword, '%')) " +
             "AND (:category is null or :category = '' or p.productCategory = :category)")
@@ -18,4 +17,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "JOIN FETCH p.store " +
             "WHERE p.productId IN :productIdList")
     List<Product> findAllByIdWithStore(@Param("productIdList") List<Long> productIdList);
+
+    @Query("SELECT p FROM Product p " +
+            "JOIN FETCH p.store " +
+            "WHERE (:storeId is null or p.store.storeId = :storeId)")
+    List<Product> findProductsByStoreId(@Param("storeId") Long storeId);
 }
