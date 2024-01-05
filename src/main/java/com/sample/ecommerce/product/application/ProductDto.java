@@ -31,4 +31,10 @@ public class ProductDto {
     @Schema(description = "물품 이미지 링크")
     String productImageUrl;
 
+    public ProductUpdateResponse toUpdateResponse() {
+        return new ProductUpdateResponse(
+            this.productId, this.productName, this.productCategory, this.productQuantity, this.productPrice, this.productImageUrl
+        );
+    }
+
 }
