@@ -1,17 +1,17 @@
 package com.sample.ecommerce.product.application;
 
-
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Schema(description = "물품 수정 요청")
 @Getter
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "물품")
-public class ProductDto {
+public class ProductUpdateRequest {
 
     @Schema(description = "물품 ID")
     Long productId;
@@ -30,11 +30,4 @@ public class ProductDto {
 
     @Schema(description = "물품 이미지 링크")
     String productImageUrl;
-
-    public ProductUpdateResponse toUpdateResponse() {
-        return new ProductUpdateResponse(
-            this.productId, this.productName, this.productCategory, this.productQuantity, this.productPrice, this.productImageUrl
-        );
-    }
-
 }

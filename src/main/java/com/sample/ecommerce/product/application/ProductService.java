@@ -43,4 +43,11 @@ public class ProductService {
     public List<ProductDto> getProductInStore(Long storeId) {
         return productRepository.findProductsByStoreId(storeId).stream().map(Product::toDto).toList();
     }
+
+    public ProductUpdateResponse updateProduct(ProductUpdateRequest productUpdateRequest) {
+        final Product product = productRepository.findById(productUpdateRequest.getProductId()).orElseThrow();
+        product.update(productUpdateRequest);
+        productRepository.save(product);
+        return product.toDto().toUpdateResponse();
+    }
 }
