@@ -37,6 +37,7 @@ public class OrderProduct {
 
     private Long productPrice;
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderProductStatus;
 
     public OrderProduct(OrderDto orderDto, ProductWithStoreDto productDto) {
