@@ -42,7 +42,10 @@ public class OrderProductDto {
     @Schema(description = "물품 가격")
     Long productPrice;
 
+    @Schema(description = "주문 물품 상태")
+    OrderStatus orderProductStatus;
+
     public OrderProductGetResponse toGetResponse() {
-        return new OrderProductGetResponse(this.orderProductId, this.orderQuantity, this.productId, this.productName, this.productPrice);
+        return new OrderProductGetResponse(this.orderProductId, this.orderQuantity, this.productId, this.productName, this.productPrice, this.orderProductStatus);
     }
 }

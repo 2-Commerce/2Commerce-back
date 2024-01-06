@@ -37,6 +37,9 @@ public class OrderService {
     public Order payOrder(PayRegisterRequest payRegisterRequest){
         final Order order = orderRepository.findById(payRegisterRequest.getOrderId()).orElseThrow();
         order.pay(payRegisterRequest);
+        List<OrderProduct> orderProductList = orderProductRepository.findByOrderId(order.getOrderId());
+        orderProductList.forEach(OrderProduct::pay);
+        orderProductRepository.saveAll(orderProductList);
         return orderRepository.save(order);
     }
 
@@ -51,5 +54,10 @@ public class OrderService {
         order.cancel();
         OrderDto orderDto = order.toDto();
         return new OrderCancelResponse(orderDto);
+    }
+
+    public List<OrderProductGetResponse> getOrderInStore(Long storeId) {
+        List<OrderProduct> orderProductList = orderProductRepository.findByStoreId(storeId);
+        return orderProductList.stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
     }
 }

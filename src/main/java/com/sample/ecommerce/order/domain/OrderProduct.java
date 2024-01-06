@@ -2,6 +2,7 @@ package com.sample.ecommerce.order.domain;
 
 import com.sample.ecommerce.order.application.OrderDto;
 import com.sample.ecommerce.order.application.OrderProductDto;
+import com.sample.ecommerce.order.application.OrderStatus;
 import com.sample.ecommerce.product.application.ProductWithStoreDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -36,6 +37,9 @@ public class OrderProduct {
 
     private Long productPrice;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderProductStatus;
+
     public OrderProduct(OrderDto orderDto, ProductWithStoreDto productDto) {
         this.orderId = orderDto.getOrderId();
         this.orderQuantity = productDto.getProductOrderQuantity();
@@ -46,7 +50,13 @@ public class OrderProduct {
         this.productName = productDto.getProductName();
         this.productCategory = productDto.getProductCategory();
         this.productPrice = productDto.getProductPrice();
+        this.orderProductStatus = OrderStatus.PENDING;
     }
 
-    public OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice); }
+    public void pay() {
+        if (this.orderProductStatus != OrderStatus.PENDING) throw new IllegalArgumentException("Order product has already been paid");
+        this.orderProductStatus = OrderStatus.PROCESSING;
+    }
+
+    public OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice, orderProductStatus); }
 }

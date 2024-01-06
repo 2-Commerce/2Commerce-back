@@ -29,4 +29,10 @@ public class OrderController {
         return orderService.cancelOrder(orderId);
     }
 
+    @Operation(summary = "가게 주문을 확인한다.")
+    @GetMapping("/api/{storeId}/order")
+    public OrderInStoreResponse getOrderInStore(@PathVariable("storeId") Long storeId) {
+        return new OrderInStoreResponse(orderService.getOrderInStore(storeId));
+    }
+
 }
