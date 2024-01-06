@@ -37,6 +37,9 @@ public class OrderService {
     public Order payOrder(PayRegisterRequest payRegisterRequest){
         final Order order = orderRepository.findById(payRegisterRequest.getOrderId()).orElseThrow();
         order.pay(payRegisterRequest);
+        List<OrderProduct> orderProductList = orderProductRepository.findByOrderId(order.getOrderId());
+        orderProductList.forEach(OrderProduct::pay);
+        orderProductRepository.saveAll(orderProductList);
         return orderRepository.save(order);
     }
 
