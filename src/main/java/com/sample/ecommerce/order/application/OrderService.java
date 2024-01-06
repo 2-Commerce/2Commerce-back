@@ -55,4 +55,9 @@ public class OrderService {
         OrderDto orderDto = order.toDto();
         return new OrderCancelResponse(orderDto);
     }
+
+    public List<OrderProductGetResponse> getOrderInStore(Long storeId) {
+        List<OrderProduct> orderProductList = orderProductRepository.findByStoreId(storeId);
+        return orderProductList.stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
+    }
 }
