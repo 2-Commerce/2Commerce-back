@@ -32,6 +32,7 @@ CREATE TABLE `order_product` (
   `product_name` VARCHAR(255) NOT NULL,
   `product_category` VARCHAR(255) NOT NULL,
   `product_price` BIGINT NOT NULL,
+  `order_product_status` VARCHAR(20) NOT NULL,
   FOREIGN KEY (`order_id`) REFERENCES `order`(`order_id`)
 );
 

@@ -72,14 +72,14 @@ INSERT INTO `order` (user_id, order_amount, order_at, order_address, order_statu
 ('user5', 42000, '2023-12-16 14:00:00', 'Address5', 'Delivered');
 
 -- order_product 테이블에 데이터 삽입
-INSERT INTO `order_product` (order_id, order_quantity, store_id, store_name, store_account_number, product_id, product_name, product_category, product_price) VALUES
-(1, 2, 1, 'Store1', 'Account1', 1, 'Product1', 'Category1', 5000),
-(1, 1, 2, 'Store2', 'Account2', 2, 'Product2', 'Category2', 7000),
-(2, 3, 3, 'Store3', 'Account3', 3, 'Product3', 'Category3', 3000),
-(2, 2, 4, 'Store4', 'Account4', 4, 'Product4', 'Category4', 8000),
-(3, 1, 5, 'Store5', 'Account5', 5, 'Product5', 'Category5', 9000),
-(3, 4, 6, 'Store6', 'Account6', 6, 'Product6', 'Category6', 6000),
-(4, 3, 7, 'Store7', 'Account7', 7, 'Product7', 'Category7', 4000),
-(4, 2, 8, 'Store8', 'Account8', 8, 'Product8', 'Category8', 10000),
-(5, 1, 9, 'Store9', 'Account9', 9, 'Product9', 'Category9', 12000),
-(5, 2, 10, 'Store10', 'Account10', 10, 'Product10', 'Category10', 15000);
+INSERT INTO `order_product` (order_id, order_quantity, store_id, store_name, store_account_number, product_id, product_name, product_category, product_price, order_product_status) VALUES
+(1, 2, 1, 'Store1', 'Account1', 1, 'Product1', 'Category1', 5000, 'Pending'),
+(1, 1, 2, 'Store2', 'Account2', 2, 'Product2', 'Category2', 7000, 'Pending'),
+(2, 3, 3, 'Store3', 'Account3', 3, 'Product3', 'Category3', 3000, 'Pending'),
+(2, 2, 4, 'Store4', 'Account4', 4, 'Product4', 'Category4', 8000, 'Pending'),
+(3, 1, 5, 'Store5', 'Account5', 5, 'Product5', 'Category5', 9000, 'Pending'),
+(3, 4, 6, 'Store6', 'Account6', 6, 'Product6', 'Category6', 6000, 'Pending'),
+(4, 3, 7, 'Store7', 'Account7', 7, 'Product7', 'Category7', 4000, 'Pending'),
+(4, 2, 8, 'Store8', 'Account8', 8, 'Product8', 'Category8', 10000, 'Pending'),
+(5, 1, 9, 'Store9', 'Account9', 9, 'Product9', 'Category9', 12000, 'Pending'),
+(5, 2, 10, 'Store10', 'Account10', 10, 'Product10', 'Category10', 15000, 'Pending');
