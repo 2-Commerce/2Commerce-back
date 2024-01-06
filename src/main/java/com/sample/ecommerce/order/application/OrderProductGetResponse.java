@@ -27,4 +27,7 @@ public class OrderProductGetResponse {
 
     @Schema(description = "물품 가격")
     Long productPrice;
+
+    @Schema(description = "물품 상태")
+    OrderStatus orderProductStatus;
 }
