@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,16 +38,16 @@ public class OrderService {
     public Order payOrder(PayRegisterRequest payRegisterRequest){
         final Order order = orderRepository.findById(payRegisterRequest.getOrderId()).orElseThrow();
         order.pay(payRegisterRequest);
-        List<OrderProduct> orderProductList = orderProductRepository.findByOrderId(order.getOrderId());
+        List<OrderProduct> orderProductList = orderProductRepository.findByOrder(order);
         orderProductList.forEach(OrderProduct::pay);
         orderProductRepository.saveAll(orderProductList);
         return orderRepository.save(order);
     }
 
     public OrderGetResponse getOrder(OrderGetRequest orderGetRequest) {
-        OrderDto orderDto = orderRepository.findById(orderGetRequest.getOrderId()).orElseThrow().toDto();
-        List<OrderProductGetResponse> productGetResponseList = orderProductRepository.findByOrderId(orderGetRequest.getOrderId()).stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
-        return new OrderGetResponse(orderDto, productGetResponseList);
+        Order order = orderRepository.findById(orderGetRequest.getOrderId()).orElseThrow();
+        List<OrderProductGetResponse> productGetResponseList = orderProductRepository.findByOrder(order).stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
+        return new OrderGetResponse(order.toDto(), productGetResponseList);
     }
 
     public OrderCancelResponse cancelOrder(Long orderId) {
@@ -64,8 +65,19 @@ public class OrderService {
     public OrderProductDeliveryResponse startDeliveryOrderProduct(OrderProductDeliveryRequest orderProductDeliveryRequest) {
         final OrderProduct orderProduct = orderProductRepository.findById(orderProductDeliveryRequest.getOrderProductId()).orElseThrow();
         orderProduct.startDelivery();
-        final Order order = orderRepository.findById(orderProduct.getOrderId()).orElseThrow();
+        final Order order = orderRepository.findById(orderProduct.getOrder().getOrderId()).orElseThrow();
         order.startDelivery();
+        orderRepository.save(order);
+        orderProductRepository.save(orderProduct);
+        return orderProduct.toDto().toDeliveryResponse();
+    }
+
+    @Transactional
+    public OrderProductDeliveryResponse completeDelivery(OrderProductDeliveryRequest orderProductDeliveryRequest) {
+        final OrderProduct orderProduct = orderProductRepository.findById(orderProductDeliveryRequest.getOrderProductId()).orElseThrow();
+        orderProduct.completeDelivery();
+        final Order order = orderRepository.findById(orderProduct.getOrder().getOrderId()).orElseThrow();
+        order.completeDelivery();
         orderRepository.save(order);
         orderProductRepository.save(orderProduct);
         return orderProduct.toDto().toDeliveryResponse();
