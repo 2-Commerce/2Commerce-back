@@ -59,4 +59,12 @@ public class OrderProduct {
     }
 
     public OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice, orderProductStatus); }
+
+    public void startDelivery() {
+        if (this.orderProductStatus == OrderStatus.PENDING) throw new IllegalArgumentException("This order product has not been paid yet.");
+        if (this.orderProductStatus == OrderStatus.SHIPPED) throw new IllegalArgumentException("This order product has already been dispatched.");
+        if (this.orderProductStatus == OrderStatus.DELIVERED) throw new IllegalArgumentException("This order product has already been delivered.");
+        if (this.orderProductStatus == OrderStatus.CANCELED) throw new IllegalArgumentException("This order product has been canceled.");
+        this.orderProductStatus = OrderStatus.SHIPPED;
+    }
 }

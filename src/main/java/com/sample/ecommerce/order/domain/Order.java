@@ -51,5 +51,13 @@ public class Order {
         this.orderStatus = OrderStatus.CANCELED;
     }
 
+    public void startDelivery() {
+        if (this.orderStatus == OrderStatus.PENDING) throw new IllegalArgumentException("This order has not been paid yet.");
+        if (this.orderStatus == OrderStatus.DELIVERED) throw new IllegalArgumentException("This order has already been delivered.");
+        if (this.orderStatus == OrderStatus.CANCELED) throw new IllegalArgumentException("This order has been canceled.");
+        this.orderStatus = OrderStatus.SHIPPED;
+    }
+
     public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
+
 }

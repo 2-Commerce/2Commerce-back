@@ -48,4 +48,8 @@ public class OrderProductDto {
     public OrderProductGetResponse toGetResponse() {
         return new OrderProductGetResponse(this.orderProductId, this.orderQuantity, this.productId, this.productName, this.productPrice, this.orderProductStatus);
     }
+
+    public OrderProductDeliveryResponse toDeliveryResponse() {
+        return new OrderProductDeliveryResponse(this.orderProductId, this.orderProductStatus);
+    }
 }

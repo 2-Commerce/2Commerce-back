@@ -35,4 +35,9 @@ public class OrderController {
         return new OrderInStoreResponse(orderService.getOrderInStore(storeId));
     }
 
+    @Operation(summary = "가게 주문 물품을 배송한다.")
+    @PatchMapping("/api/order/product/startDelivery")
+    public OrderProductDeliveryResponse startDeliveryOrderProduct(@RequestBody OrderProductDeliveryRequest orderProductDeliveryRequest) {
+        return orderService.startDeliveryOrderProduct(orderProductDeliveryRequest);
+    }
 }
