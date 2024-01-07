@@ -60,4 +60,14 @@ public class OrderService {
         List<OrderProduct> orderProductList = orderProductRepository.findByStoreId(storeId);
         return orderProductList.stream().map(OrderProduct::toDto).map(OrderProductDto::toGetResponse).toList();
     }
+
+    public OrderProductDeliveryResponse startDeliveryOrderProduct(OrderProductDeliveryRequest orderProductDeliveryRequest) {
+        final OrderProduct orderProduct = orderProductRepository.findById(orderProductDeliveryRequest.getOrderProductId()).orElseThrow();
+        orderProduct.startDelivery();
+        final Order order = orderRepository.findById(orderProduct.getOrderId()).orElseThrow();
+        order.startDelivery();
+        orderRepository.save(order);
+        orderProductRepository.save(orderProduct);
+        return orderProduct.toDto().toDeliveryResponse();
+    }
 }
