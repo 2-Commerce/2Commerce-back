@@ -40,4 +40,10 @@ public class OrderController {
     public OrderProductDeliveryResponse startDeliveryOrderProduct(@RequestBody OrderProductDeliveryRequest orderProductDeliveryRequest) {
         return orderService.startDeliveryOrderProduct(orderProductDeliveryRequest);
     }
+
+    @Operation(summary = "가게 주문 물품의 배송을 완료한다.")
+    @PatchMapping("/api/order/product/completeDelivery")
+    public OrderProductDeliveryResponse completeDeliveryOrderProduct(@RequestBody OrderProductDeliveryRequest orderProductDeliveryRequest) {
+        return orderService.completeDelivery(orderProductDeliveryRequest);
+    }
 }

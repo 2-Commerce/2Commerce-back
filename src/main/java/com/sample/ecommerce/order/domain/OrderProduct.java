@@ -19,7 +19,9 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderProductId;
 
-    private Long orderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     private Long orderQuantity;
 
@@ -41,7 +43,7 @@ public class OrderProduct {
     private OrderStatus orderProductStatus;
 
     public OrderProduct(OrderDto orderDto, ProductWithStoreDto productDto) {
-        this.orderId = orderDto.getOrderId();
+        //this.orderId = orderDto.getOrderId();
         this.orderQuantity = productDto.getProductOrderQuantity();
         this.storeId = productDto.getStoreId();
         this.storeName = productDto.getStoreName();
@@ -53,12 +55,12 @@ public class OrderProduct {
         this.orderProductStatus = OrderStatus.PENDING;
     }
 
+    public OrderProductDto toDto() { return new OrderProductDto(orderProductId, null, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice, orderProductStatus); }
+
     public void pay() {
         if (this.orderProductStatus != OrderStatus.PENDING) throw new IllegalArgumentException("Order product has already been paid");
         this.orderProductStatus = OrderStatus.PROCESSING;
     }
-
-    public OrderProductDto toDto() { return new OrderProductDto(orderProductId, orderId, orderQuantity, storeId, storeName, storeAccountNumber, productId, productName, productCategory, productPrice, orderProductStatus); }
 
     public void startDelivery() {
         if (this.orderProductStatus == OrderStatus.PENDING) throw new IllegalArgumentException("This order product has not been paid yet.");
@@ -66,5 +68,13 @@ public class OrderProduct {
         if (this.orderProductStatus == OrderStatus.DELIVERED) throw new IllegalArgumentException("This order product has already been delivered.");
         if (this.orderProductStatus == OrderStatus.CANCELED) throw new IllegalArgumentException("This order product has been canceled.");
         this.orderProductStatus = OrderStatus.SHIPPED;
+    }
+
+    public void completeDelivery() {
+        if (this.orderProductStatus == OrderStatus.PENDING) throw new IllegalArgumentException("This order product has not been paid yet.");
+        if (this.orderProductStatus == OrderStatus.PROCESSING) throw new IllegalArgumentException("This order product has not been dispatched yet.");
+        if (this.orderProductStatus == OrderStatus.DELIVERED) throw new IllegalArgumentException("This order product has already been delivered.");
+        if (this.orderProductStatus == OrderStatus.CANCELED) throw new IllegalArgumentException("This order product has been canceled.");
+        this.orderProductStatus = OrderStatus.DELIVERED;
     }
 }
