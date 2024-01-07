@@ -65,16 +65,16 @@ INSERT INTO `bookmark` (user_id, product_id) VALUES
 
 -- order 테이블에 데이터 삽입
 INSERT INTO `order` (user_id, order_amount, order_at, order_address, order_status) VALUES
-('user1', 17000, '2023-12-16 12:00:00', 'Address1', 'Pending'),
-('user2', 25000, '2023-12-16 12:30:00', 'Address2', 'Delivered'),
-('user3', 33000, '2023-12-16 13:00:00', 'Address3', 'Processing'),
-('user4', 32000, '2023-12-16 13:30:00', 'Address4', 'Shipped'),
-('user5', 42000, '2023-12-16 14:00:00', 'Address5', 'Delivered');
+('user1', 17000, '2023-12-16 12:00:00', 'Address1', 'Processing'),
+('user2', 25000, '2023-12-16 12:30:00', 'Address2', 'Pending'),
+('user3', 33000, '2023-12-16 13:00:00', 'Address3', 'Pending'),
+('user4', 32000, '2023-12-16 13:30:00', 'Address4', 'Pending'),
+('user5', 42000, '2023-12-16 14:00:00', 'Address5', 'Pending');
 
 -- order_product 테이블에 데이터 삽입
 INSERT INTO `order_product` (order_id, order_quantity, store_id, store_name, store_account_number, product_id, product_name, product_category, product_price, order_product_status) VALUES
-(1, 2, 1, 'Store1', 'Account1', 1, 'Product1', 'Category1', 5000, 'Pending'),
-(1, 1, 2, 'Store2', 'Account2', 2, 'Product2', 'Category2', 7000, 'Pending'),
+(1, 2, 1, 'Store1', 'Account1', 1, 'Product1', 'Category1', 5000, 'Processing'),
+(1, 1, 2, 'Store2', 'Account2', 2, 'Product2', 'Category2', 7000, 'Processing'),
 (2, 3, 3, 'Store3', 'Account3', 3, 'Product3', 'Category3', 3000, 'Pending'),
 (2, 2, 4, 'Store4', 'Account4', 4, 'Product4', 'Category4', 8000, 'Pending'),
 (3, 1, 5, 'Store5', 'Account5', 5, 'Product5', 'Category5', 9000, 'Pending'),
