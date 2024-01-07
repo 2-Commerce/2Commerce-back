@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "`order`")
@@ -32,6 +33,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderProduct> orderProductList;
+
     public Order(OrderRegisterRequest request, Long orderAmount) {
         this.userId = request.getUserId();
         this.orderAmount = orderAmount;
@@ -39,6 +43,8 @@ public class Order {
         this.orderAddress = request.getOrderAddress();
         this.orderStatus = OrderStatus.PENDING;
     }
+
+    public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
 
     public void pay(PayRegisterRequest payRegisterRequest) {
         if (!payRegisterRequest.getUserId().equals(this.userId)) throw new IllegalArgumentException("User IDs do not match");
@@ -58,6 +64,14 @@ public class Order {
         this.orderStatus = OrderStatus.SHIPPED;
     }
 
-    public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
+    public void completeDelivery() {
+        if (this.orderStatus == OrderStatus.PENDING) throw new IllegalArgumentException("This order product has not been paid yet.");
+        if (this.orderStatus == OrderStatus.PROCESSING) throw new IllegalArgumentException("This order product has not been dispatched yet.");
+        if (this.orderStatus == OrderStatus.DELIVERED) throw new IllegalArgumentException("This order product has already been delivered.");
+        if (this.orderStatus == OrderStatus.CANCELED) throw new IllegalArgumentException("This order product has been canceled.");
+        boolean allProductsDelivered = orderProductList.stream()
+                .allMatch(orderProduct -> orderProduct.getOrderProductStatus() == OrderStatus.DELIVERED);
+        if (allProductsDelivered) this.orderStatus = OrderStatus.DELIVERED;
+    }
 
 }
