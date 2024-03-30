@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: compose
   jpa:
     database: mysql
     hibernate:
