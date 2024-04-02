@@ -6,11 +6,11 @@ import com.sample.ecommerce.product.domain.Product;
 import com.sample.ecommerce.product.domain.ProductRepository;
 import com.sample.ecommerce.user.domain.User;
 import com.sample.ecommerce.user.domain.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -32,9 +32,7 @@ public class BookmarkService {
 
         if(findBookmark.isPresent()) throw new IllegalArgumentException("This Bookmark is already registered");
 
-        Bookmark bookmark = new Bookmark(bookmarkRegisterRequest);
-        bookmark.assignUser(user);
-        bookmark.assignProduct(product);
+        Bookmark bookmark = new Bookmark(user, product);
 
         return bookmarkRepository.save(bookmark).toDto();
     }
