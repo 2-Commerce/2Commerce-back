@@ -4,6 +4,7 @@ import com.sample.ecommerce.order.application.OrderDto;
 import com.sample.ecommerce.order.application.OrderRegisterRequest;
 import com.sample.ecommerce.order.application.OrderStatus;
 import com.sample.ecommerce.pay.application.PayRegisterRequest;
+import com.sample.ecommerce.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +23,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
+    private User user;
 
     private Long orderAmount;
 
@@ -36,18 +39,17 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderProduct> orderProductList;
 
-    public Order(OrderRegisterRequest request, Long orderAmount) {
-        this.userId = request.getUserId();
+    public Order(OrderRegisterRequest request, Long orderAmount, User user) {
         this.orderAmount = orderAmount;
         this.orderAt = LocalDateTime.now();
         this.orderAddress = request.getOrderAddress();
         this.orderStatus = OrderStatus.PENDING;
     }
 
-    public OrderDto toDto() { return new OrderDto(orderId, userId, orderAmount, orderAt, orderAddress, orderStatus); }
+    public OrderDto toDto() { return new OrderDto(orderId, user.getUserId(), orderAmount, orderAt, orderAddress, orderStatus); }
 
     public void pay(PayRegisterRequest payRegisterRequest) {
-        if (!payRegisterRequest.getUserId().equals(this.userId)) throw new IllegalArgumentException("User IDs do not match");
+        if (!payRegisterRequest.getUserId().equals(this.user.getUserId())) throw new IllegalArgumentException("User IDs do not match");
         if (this.orderStatus != OrderStatus.PENDING) throw new IllegalArgumentException("Order has already been paid");
         this.orderStatus = OrderStatus.PROCESSING;
     }

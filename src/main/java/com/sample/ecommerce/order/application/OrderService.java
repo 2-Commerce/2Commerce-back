@@ -7,6 +7,8 @@ import com.sample.ecommerce.order.domain.OrderRepository;
 import com.sample.ecommerce.pay.application.PayRegisterRequest;
 import com.sample.ecommerce.product.application.ProductService;
 import com.sample.ecommerce.product.application.ProductWithStoreDto;
+import com.sample.ecommerce.user.domain.User;
+import com.sample.ecommerce.user.domain.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderService {
@@ -23,12 +26,19 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderProductRepository orderProductRepository;
 
+    UserRepository userRepository;
+
     ProductService productService;
 
     public OrderDto registerOrder(OrderRegisterRequest orderRegisterRequest) {
+        User user = userRepository.findByUserId(orderRegisterRequest.getUserId()).orElseThrow();
+
         List<ProductWithStoreDto> orderProductDtoList = productService.orderProduct(orderRegisterRequest.getProductList());
         Long orderAmount = orderProductDtoList.stream().mapToLong(product -> product.getProductPrice() * product.getProductOrderQuantity()).sum();
-        final Order order = orderRepository.save(new Order(orderRegisterRequest, orderAmount));
+
+        Order order = new Order(orderRegisterRequest, orderAmount, user);
+        orderRepository.save(order);
+
         OrderDto orderDto = order.toDto();
         List<OrderProduct> orderProductList = orderProductDtoList.stream().map(orderProductDto -> new OrderProduct(orderDto,  orderProductDto)).toList();
         orderProductRepository.saveAll(orderProductList);
