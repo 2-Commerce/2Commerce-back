@@ -24,19 +24,13 @@ public class Bookmark {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    public Bookmark(BookmarkRegisterRequest request) {
-
+    public Bookmark(User user, Product product) {
+        this.user = user;
+        this.product = product;
     }
 
     public BookmarkDto toDto() { return new BookmarkDto(bookmarkId, user.getUserId(), product.getProductId()); }
-
-    public void assignUser(User user) {
-        this.user = user;
-    }
-
-    public void assignProduct(Product product) {
-        this.product = product;
-    }
 }
