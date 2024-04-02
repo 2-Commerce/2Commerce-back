@@ -33,7 +33,6 @@ public class ProductService {
         List<Product> productList=  productRepository.findAllByIdWithStore(productIdList);
         Map<Long, Long> orderProductMap = orderProductList.stream().collect(Collectors.toMap(OrderProductRegisterRequest::getProductId, OrderProductRegisterRequest::getProductOrderQuantity));
         productList.forEach(product -> {product.order(orderProductMap.get(product.getProductId()));});
-        productRepository.saveAll(productList);
         return productList.stream().map(Product::toDtoWithStore).toList();
     }
 
@@ -49,7 +48,6 @@ public class ProductService {
     public ProductUpdateResponse updateProduct(ProductUpdateRequest productUpdateRequest) {
         final Product product = productRepository.findById(productUpdateRequest.getProductId()).orElseThrow();
         product.update(productUpdateRequest);
-        productRepository.save(product);
         return product.toDto().toUpdateResponse();
     }
 }

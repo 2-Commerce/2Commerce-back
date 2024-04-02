@@ -50,8 +50,7 @@ public class OrderService {
         order.pay(payRegisterRequest);
         List<OrderProduct> orderProductList = orderProductRepository.findByOrder(order);
         orderProductList.forEach(OrderProduct::pay);
-        orderProductRepository.saveAll(orderProductList);
-        return orderRepository.save(order);
+        return order;
     }
 
     public OrderGetResponse getOrder(OrderGetRequest orderGetRequest) {
@@ -77,19 +76,14 @@ public class OrderService {
         orderProduct.startDelivery();
         final Order order = orderRepository.findById(orderProduct.getOrder().getOrderId()).orElseThrow();
         order.startDelivery();
-        orderRepository.save(order);
-        orderProductRepository.save(orderProduct);
         return orderProduct.toDto().toDeliveryResponse();
     }
 
-    @Transactional
     public OrderProductDeliveryResponse completeDelivery(OrderProductDeliveryRequest orderProductDeliveryRequest) {
         final OrderProduct orderProduct = orderProductRepository.findById(orderProductDeliveryRequest.getOrderProductId()).orElseThrow();
         orderProduct.completeDelivery();
         final Order order = orderRepository.findById(orderProduct.getOrder().getOrderId()).orElseThrow();
         order.completeDelivery();
-        orderRepository.save(order);
-        orderProductRepository.save(orderProduct);
         return orderProduct.toDto().toDeliveryResponse();
     }
 }
