@@ -1,6 +1,7 @@
 package com.sample.ecommerce.store.domain;
 
 import com.sample.ecommerce.product.domain.Product;
+import com.sample.ecommerce.seller.domain.Seller;
 import com.sample.ecommerce.store.application.StoreDto;
 import com.sample.ecommerce.store.application.StoreRegisterRequest;
 import jakarta.persistence.*;
@@ -20,7 +21,9 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeId;
 
-    private String sellerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_seq")
+    private Seller seller;
 
     private String storeLicense;
 
@@ -31,12 +34,12 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> productList;
 
-    public Store(StoreRegisterRequest storeRegisterRequest) {
-        this.sellerId = storeRegisterRequest.getSellerId();
+    public Store(StoreRegisterRequest storeRegisterRequest, Seller seller) {
+        this.seller = seller;
         this.storeLicense = storeRegisterRequest.getStoreLicense();
         this.storeAccountNumber = storeRegisterRequest.getStoreAccountNumber();
         this.storeName = storeRegisterRequest.getStoreName();
     }
 
-    public StoreDto toDto() {return new StoreDto(storeId, sellerId, storeLicense, storeAccountNumber, storeName); }
+    public StoreDto toDto() {return new StoreDto(storeId, seller.getSellerId(), storeLicense, storeAccountNumber, storeName); }
 }
