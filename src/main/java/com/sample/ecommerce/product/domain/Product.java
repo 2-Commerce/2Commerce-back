@@ -70,5 +70,5 @@ public class Product {
 
     public ProductDto toDto() { return new ProductDto(productId, productName, productCategory, productQuantity, productPrice, productImageUrl); }
 
-    public ProductWithStoreDto toDtoWithStore() { return new ProductWithStoreDto(productId, store.getStoreId(), productName, productCategory, productQuantity, productOrderQuantity, productPrice, productImageUrl, store.getSellerId(), store.getStoreLicense(), store.getStoreAccountNumber(), store.getStoreName()); }
+    public ProductWithStoreDto toDtoWithStore() { return new ProductWithStoreDto(productId, store.getStoreId(), productName, productCategory, productQuantity, productOrderQuantity, productPrice, productImageUrl, store.getSeller().getSellerId(), store.getStoreLicense(), store.getStoreAccountNumber(), store.getStoreName()); }
 }
