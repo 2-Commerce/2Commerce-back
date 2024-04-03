@@ -7,8 +7,8 @@ import com.sample.ecommerce.order.domain.OrderRepository;
 import com.sample.ecommerce.pay.application.PayRegisterRequest;
 import com.sample.ecommerce.product.application.ProductService;
 import com.sample.ecommerce.product.application.ProductWithStoreDto;
+import com.sample.ecommerce.user.application.UserService;
 import com.sample.ecommerce.user.domain.User;
-import com.sample.ecommerce.user.domain.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,17 +26,16 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderProductRepository orderProductRepository;
 
-    UserRepository userRepository;
-
+    UserService userService;
     ProductService productService;
 
     public OrderDto registerOrder(OrderRegisterRequest orderRegisterRequest) {
-        User user = userRepository.findByUserId(orderRegisterRequest.getUserId()).orElseThrow();
+        final User user = userService.getUser(orderRegisterRequest.getUserId());
 
         List<ProductWithStoreDto> orderProductDtoList = productService.orderProduct(orderRegisterRequest.getProductList());
         Long orderAmount = orderProductDtoList.stream().mapToLong(product -> product.getProductPrice() * product.getProductOrderQuantity()).sum();
 
-        Order order = new Order(orderRegisterRequest, orderAmount, user);
+        final Order order = new Order(orderRegisterRequest, orderAmount, user);
         orderRepository.save(order);
 
         OrderDto orderDto = order.toDto();
