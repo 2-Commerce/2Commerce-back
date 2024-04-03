@@ -50,4 +50,8 @@ public class ProductService {
         product.update(productUpdateRequest);
         return product.toDto().toUpdateResponse();
     }
+
+    public Product getProduct(Long productId){
+        return productRepository.findById(productId).orElseThrow();
+    }
 }
