@@ -2,8 +2,10 @@ package com.sample.ecommerce.bookmark.application;
 
 import com.sample.ecommerce.bookmark.domain.Bookmark;
 import com.sample.ecommerce.bookmark.domain.BookmarkRepository;
+import com.sample.ecommerce.product.application.ProductService;
 import com.sample.ecommerce.product.domain.Product;
 import com.sample.ecommerce.product.domain.ProductRepository;
+import com.sample.ecommerce.user.application.UserService;
 import com.sample.ecommerce.user.domain.User;
 import com.sample.ecommerce.user.domain.UserRepository;
 import lombok.AccessLevel;
@@ -21,12 +23,13 @@ import java.util.Optional;
 public class BookmarkService {
 
     BookmarkRepository bookmarkRepository;
-    UserRepository userRepository;
-    ProductRepository productRepository;
+
+    UserService userService;
+    ProductService productService;
 
     public BookmarkDto registerBookmark(BookmarkRegisterRequest bookmarkRegisterRequest) {
-        User user = userRepository.findByUserId(bookmarkRegisterRequest.getUserId()).orElseThrow();
-        Product product = productRepository.findById(bookmarkRegisterRequest.getProductId()).orElseThrow();
+        final User user = userService.getUser(bookmarkRegisterRequest.getUserId());
+        final Product product = productService.getProduct(bookmarkRegisterRequest.getProductId());
 
         Optional<Bookmark> findBookmark = bookmarkRepository.findByUserAndProduct(user, product);
 
