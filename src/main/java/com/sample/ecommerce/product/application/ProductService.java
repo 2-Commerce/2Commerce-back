@@ -32,7 +32,7 @@ public class ProductService {
         List<Long> productIdList = orderProductList.stream().map(OrderProductRegisterRequest::getProductId).toList();
         List<Product> productList=  productRepository.findAllByIdWithStore(productIdList);
         Map<Long, Long> orderProductMap = orderProductList.stream().collect(Collectors.toMap(OrderProductRegisterRequest::getProductId, OrderProductRegisterRequest::getProductOrderQuantity));
-        productList.forEach(product -> {product.order(orderProductMap.get(product.getProductId()));});
+        productList.forEach(product -> product.order(orderProductMap.get(product.getProductId())));
         return productList.stream().map(Product::toDtoWithStore).toList();
     }
 

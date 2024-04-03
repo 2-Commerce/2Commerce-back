@@ -5,7 +5,6 @@ import com.sample.ecommerce.pay.domain.PayTransaction;
 import com.sample.ecommerce.pay.domain.PayTransactionRepository;
 import com.sample.ecommerce.user.application.UserService;
 import com.sample.ecommerce.user.domain.User;
-import com.sample.ecommerce.user.domain.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
